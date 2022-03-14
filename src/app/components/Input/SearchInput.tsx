@@ -32,7 +32,7 @@ export default function Searchinput() {
   return (
     <Box>
       <SearchIcon />
-      <input
+      <Input
         type="text"
         value={content}
         placeholder="검색"
