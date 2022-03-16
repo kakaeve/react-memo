@@ -1,7 +1,7 @@
+import { actionChannel } from '@redux-saga/core/effects';
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { useInjectReducer } from 'redux-injectors';
 import { loadMemoData, saveMemoData } from 'store/localStorage';
-import { createOptimisticUniqueName } from 'typescript';
 import { MemoState } from './types';
 
 export const initialState: MemoState = {
@@ -10,7 +10,7 @@ export const initialState: MemoState = {
 };
 
 const slice = createSlice({
-  name: 'memo',
+  name: 'meno',
   initialState: initialState,
   reducers: {
     addMemo: {
@@ -37,7 +37,6 @@ const slice = createSlice({
     },
     selectMemo(state, action: PayloadAction<{ id: string }>) {
       const id = action.payload.id;
-
       for (const memo of state.memolist) {
         if (memo.id === id) continue;
         if (memo.selected) memo.selected = false;
@@ -53,7 +52,6 @@ const slice = createSlice({
     ) {
       const content = action.payload.content;
       const preview = action.payload.preview;
-
       const memo = state.memolist.find(memo => memo.selected);
       if (memo) {
         memo.content = content;
@@ -63,7 +61,7 @@ const slice = createSlice({
       saveMemoData(state.memolist);
     },
     deleteMemo(state, action: PayloadAction) {
-      const filteredMemos = state.memolist.filter(memo => memo.selected);
+      const filteredMemos = state.memolist.filter(memo => !memo.selected);
       state.memolist = filteredMemos;
 
       const sortedMemos = [...state.memolist].sort(
@@ -74,7 +72,6 @@ const slice = createSlice({
         const memo = state.memolist.find(memo => memo.id === sortedMemos[0].id);
         if (memo) memo.selected = true;
       }
-
       saveMemoData(state.memolist);
     },
     searchMemo(state, action: PayloadAction<{ search: string }>) {
@@ -87,5 +84,5 @@ export const { actions: MemoActions } = slice;
 
 export const useMemoSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
-  return { MemoActions };
+  return { MemoActions: slice.actions };
 };
