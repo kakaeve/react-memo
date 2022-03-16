@@ -2,6 +2,8 @@ import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { useInjectReducer } from 'redux-injectors';
 import { loadMemoData, saveMemoData } from 'store/localStorage';
 import { createOptimisticUniqueName } from 'typescript';
+//import { createSlice } from 'utils/@reduxjs/toolkit';
+
 import { MemoState } from './types';
 
 export const initialState: MemoState = {
@@ -63,7 +65,7 @@ const slice = createSlice({
       saveMemoData(state.memolist);
     },
     deleteMemo(state, action: PayloadAction) {
-      const filteredMemos = state.memolist.filter(memo => memo.selected);
+      const filteredMemos = state.memolist.filter(memo => !memo.selected);
       state.memolist = filteredMemos;
 
       const sortedMemos = [...state.memolist].sort(
