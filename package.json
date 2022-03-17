@@ -8,7 +8,6 @@
     "@testing-library/react": "12.1.2",
     "@types/fontfaceobserver": "2.1.0",
     "@types/jest": "27.4.0",
-    "@types/node": "14.14.31",
     "@types/react": "17.0.38",
     "@types/react-dom": "17.0.11",
     "@types/react-redux": "7.1.22",
@@ -65,9 +64,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && yarn run workbox",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "workbox": "workbox generateSW workbox-config.ts",
     "start:prod": "yarn run build && serve -s build",
     "test:generators": "ts-node ./internals/testing/generators/test-generators.ts",
     "checkTs": "tsc --noEmit",
@@ -120,5 +120,9 @@
         "statements": 90
       }
     }
+  },
+  "devDependencies": {
+    "@types/node": "17.0.21",
+    "workbox-cli": "6.5.1"
   }
 }

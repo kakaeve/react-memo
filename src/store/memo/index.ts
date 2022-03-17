@@ -13,7 +13,7 @@ export const initialState: MemoState = {
 };
 
 const slice = createSlice({
-  name: 'meno',
+  name: 'memo',
   initialState: initialState,
   reducers: {
     addMemo: {
