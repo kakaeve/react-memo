@@ -16,6 +16,7 @@ react를 이용한 메모 SPA구축
 - redux
 - jsx
 - styled-component
+- typescript
 
 # 주요기능
 >
